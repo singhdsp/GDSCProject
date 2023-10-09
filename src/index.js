@@ -11,6 +11,8 @@ import SignUp from './Pages/SignUp';
 import Login from './Pages/Login';
 import ForgotPassword from './Pages/ForgotPassword';
 import ViewPosts from './Pages/ViewPost';
+import MyPosts from './Pages/MyPosts';
+import CreatePost from './Pages/CreatePost';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +21,17 @@ const router = createBrowserRouter([
   },
   {
     path: "Dashboard",
-    element: <Dashboard />
+    element: <Dashboard />,
+    children: [
+      {
+        path: "",
+        element: <MyPosts />
+      },
+      {
+        path: "CreatePost",
+        element: <CreatePost />
+      }
+    ]
   },
   {
     path: "Login",
