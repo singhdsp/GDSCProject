@@ -43,8 +43,7 @@ export default function Dashboard() {
                         <img src={profileURL} className='h-24 w-24 rounded-full object-cover' />
                         <div>
                             <h1 className='font-bold text-2xl'>{displayName}</h1>
-                            <h1 className='font-semibold'>Joined On {signUpDate}</h1>
-                            <h1 className='font-semibold'>223 Posts</h1>
+                            <h1 className='font-semibold'>Joined On {signUpDate}</h1>                           
                         </div>
                     </div>
 
