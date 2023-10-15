@@ -110,10 +110,10 @@ export default function Home() {
             </div>
             <div className='py-8 bg-gray-100 w-full grid grid-cols-12'>
                 <div className='px-6 space-y-6 col-span-3'>
-                    <div className='py-4 px-8 font-Mt bg-white rounded-md flex flex-col justify-center items-center space-y-1'>
-                        <h1 className='font-semibold text-lg'>New To The Community?</h1>
-                        <h1 className='text-2xl font-bold text-blue-700 uppercase'>Join The</h1>
-                        <h1 className='text-2xl font-bold text-blue-700 uppercase'>Discussion</h1>
+                    <div className='py-4 px-8 font-Mt bg-white rounded-md flex flex-col text-center justify-center items-center space-y-1'>
+                        <h1 className='font-semibold text-md xl:text-lg'>New To The Community?</h1>
+                        <h1 className='text-lg xl:text-2xl font-bold text-blue-700 uppercase'>Join The</h1>
+                        <h1 className='text-lg xl:text-2xl font-bold text-blue-700 uppercase'>Discussion</h1>
                         <div className='px-4 py-2 bg-blue-700 hover:bg-blue-900 uppercase text-white rounded-md cursor-pointer' onClick={() => window.location.href = "/SignUp"}>
                             <h1>Join Now!</h1>
                         </div>

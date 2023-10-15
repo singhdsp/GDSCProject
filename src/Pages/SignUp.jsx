@@ -84,9 +84,9 @@ export default function SignUp() {
 
 
   return (
-    <div className='h-screen w-screen px-48 py-20 flex justify-center items-center bg-gray-200'>
+    <div className='h-screen w-screen px-24 xl:px-48 py-10 xl:py-20 flex justify-center items-center bg-gray-200'>
       <div className='w-full h-full shadow-2xl rounded-3xl grid grid-cols-5 bg-white'>
-        <div className=' col-span-3 flex flex-col p-16 overflow-y-scroll'>
+        <div className=' col-span-3 flex flex-col px-4 py-16 xl:p-16 overflow-y-scroll'>
           <div className='space-y-4 flex flex-col items-center'>
             <div className='flex space-x-2 items-center'>
               <div className='h-10 w-10 p-2 rounded-md bg-gradient-to-tr from-blue-800 to-orange-800 flex justify-center items-center'>
@@ -94,7 +94,7 @@ export default function SignUp() {
               </div>
               <Link to="/" className='uppercase font-Mt font-extrabold tracking-wider text-2xl'>Programiz</Link>
             </div>
-            <h1 className='text-center font-bold font-Mt text-4xl capitalize tracking-wide text-blue-700'>Create Your Account</h1>
+            <h1 className='text-center font-bold font-Mt text-3xl xl:text-4xl capitalize tracking-wide text-blue-700'>Create Your Account</h1>
             <div className='h-32 w-32 bg-gray-200 rounded-full mx-auto flex justify-center items-center' onClick={() => inputFile.current.click()}>
               {previewImage === null && (
                 <>

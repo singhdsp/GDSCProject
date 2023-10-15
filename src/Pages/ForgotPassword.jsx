@@ -24,7 +24,7 @@ export default function ForgotPassword() {
 
 
     return (
-        <div className='h-screen w-screen px-48 py-20 flex justify-center items-center bg-gray-200'>
+        <div className='h-screen w-screen px-24 py-10 xl:px-48 xl:py-20 flex justify-center items-center bg-gray-200'>
             <div className='w-full h-full shadow-2xl rounded-3xl grid grid-cols-5 bg-white'>
                 <div className=' col-span-3 flex flex-col p-16 overflow-y-scroll'>
                     <div className='space-y-4 flex flex-col justify-center items-center h-full'>
@@ -41,7 +41,7 @@ export default function ForgotPassword() {
                             <input type='text' name='Email' id="Email" className='bg-gray-200 w-full rounded-md outline-none border-none py-3 pl-12 pr-4' value={txtEmail} onChange={(e) => setTxtEmail(e.target.value)} />
                             <MdEmail size={28} className='absolute left-12 bottom-2.5' />
                         </div>
-                        <button className='w-full py-2 bg-blue-500 hover:bg-blue-800 text-white rounded-full uppercase tracking-widest font-bold text-xl bg-gradient-to-br from-violet-600 to-blue-700 transition-all hover:scale-105' onClick={() => sendPasswordResetEmailF()}>Send Password Reset Email</button>
+                        <button className='w-full py-2 bg-blue-500 hover:bg-blue-800 text-white rounded-full uppercase tracking-widest font-bold text-lg xl:text-xl bg-gradient-to-br from-violet-600 to-blue-700 transition-all hover:scale-105' onClick={() => sendPasswordResetEmailF()}>Send Password Reset Email</button>
                     </div>
                 </div>
                 <div className='col-span-2 relative'>

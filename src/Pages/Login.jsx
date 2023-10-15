@@ -47,9 +47,9 @@ export default function Login() {
     }
 
     return (
-        <div className='h-screen w-screen px-48 py-20 flex justify-center items-center bg-gray-200'>
+        <div className='h-screen w-screen px-24 py-10 xl:px-48 xl:py-20 flex justify-center items-center bg-gray-200'>
             <div className='w-full h-full shadow-2xl rounded-3xl grid grid-cols-5 bg-white'>
-                <div className=' col-span-3 flex flex-col p-16 overflow-y-scroll'>
+                <div className=' col-span-3 flex flex-col p-6 py-16 xl:p-16 overflow-y-scroll'>
                     <div className='space-y-4 flex flex-col justify-center items-center'>
                         <div className='flex space-x-2 items-center'>
                             <div className='h-10 w-10 p-2 rounded-md bg-gradient-to-tr from-blue-800 to-orange-800 flex justify-center items-center'>
@@ -57,7 +57,7 @@ export default function Login() {
                             </div>
                             <Link to="/" className='uppercase font-Mt font-extrabold tracking-wider text-2xl'>Programiz</Link>
                         </div>
-                        <h1 className='text-center font-bold font-Mt text-4xl capitalize tracking-wide text-blue-700'>Login To Your Account</h1>
+                        <h1 className='text-center font-bold font-Mt text-3xl xl:text-4xl capitalize tracking-wide text-blue-700'>Login To Your Account</h1>
                         <div className='w-full px-10 font-Mt relative'>
                             <label for="Email" className='font-semibold uppercase'>Email</label>
                             <input type='text' name='Email' id="Email" className='bg-gray-200 w-full rounded-md outline-none border-none py-3 pl-12 pr-4' value={txtEmail} onChange={(e) => setTxtEmail(e.target.value)} />
