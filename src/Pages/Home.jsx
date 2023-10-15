@@ -45,13 +45,13 @@ export default function Home() {
 
     const sortPostMain = () => {
         if (sortBy === "View") {
-            return posts.sort(sortPostsByViews)
+            return posts.sort((a,b) => sortPostsByViews(a,b))
         } else if (sortBy === "Date") {
-            return posts.sort(sortPostsByDate)
+            return posts.sort((a,b) => sortPostsByDate(a,b))
         } else if (sortBy === "Like") {
-            return posts.sort(sortPostsByLikes)
+            return posts.sort((a,b) => sortPostsByLikes(a,b))
         } else {
-            return posts.sort(sortPostsByViews)
+            return posts.sort((a,b) => sortPostsByViews(a,b))
         }
     }
 
@@ -122,7 +122,7 @@ export default function Home() {
                         <h1 className='text-2xl font-bold text-blue-700 uppercase tracking-wider'>Trending</h1>
                         {Trending && (
                             <div className='w-full py-2 space-y-2'>
-                                {Trending.sort(sortPostsByViews()).map((doc) => {
+                                {Trending.sort((a,b) => sortPostsByViews(a,b)).map((doc) => {
                                     return (
                                         <PostsSmall userName={doc.data.Username} postTitle={doc.data.Title} profileURl={doc.data.ProfileURL} docId={doc.id} />
                                     )
