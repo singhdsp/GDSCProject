@@ -13,11 +13,13 @@ import ForgotPassword from './Pages/ForgotPassword';
 import ViewPosts from './Pages/ViewPost';
 import MyPosts from './Pages/MyPosts';
 import CreatePost from './Pages/CreatePost';
+import NotFound from './Pages/NotFound';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    errorElement: <NotFound />
   },
   {
     path: "Dashboard",
@@ -46,7 +48,7 @@ const router = createBrowserRouter([
     element: <ForgotPassword />
   },
   {
-    path: "Posts",
+    path: "Posts/:PostID",
     element: <ViewPosts />
   }
 ]);

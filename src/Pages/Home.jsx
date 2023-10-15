@@ -1,10 +1,80 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from '../Components/NavBar'
 import { FaSearch } from 'react-icons/fa'
 import PostsSmall from '../Components/Posts/PostsSmall'
 import PostsLarge from '../Components/Posts/PostsLarge'
+import { app } from '../Firebase/Firebase'
+import { doc, getDoc, getFirestore, collection, query, where, getDocs } from 'firebase/firestore'
+import { Link } from 'react-router-dom'
 
 export default function Home() {
+    const [posts, setPosts] = useState(null);
+    const [Trending, setTrending] = useState(null);
+    const [sortBy, setSortBy] = useState("View");
+    const db = getFirestore(app);
+
+    const sortPostsByViews = (a, b) => {
+        if (a.data.Views.length > b.data.Views.length) {
+            return -1;
+        }
+        if (a.data.Views.length < b.data.Views.length) {
+            return 1;
+        }
+        return 0;
+    }
+
+    const sortPostsByDate = (a, b) => {
+        if (a.data.Timestamp > b.data.Timestamp) {
+            return -1;
+        }
+        if (a.data.Timestamp < b.data.Timestamp) {
+            return 1;
+        }
+        return 0;
+    }
+
+    const sortPostsByLikes = (a, b) => {
+        if (a.data.Likes.length > b.data.Likes.length) {
+            return -1;
+        }
+        if (a.data.Likes.length < b.data.Likes.length) {
+            return 1;
+        }
+        return 0;
+    }
+
+    const sortPostMain = () => {
+        if (sortBy === "View") {
+            return posts.sort(sortPostsByViews)
+        } else if (sortBy === "Date") {
+            return posts.sort(sortPostsByDate)
+        } else if (sortBy === "Like") {
+            return posts.sort(sortPostsByLikes)
+        } else {
+            return posts.sort(sortPostsByViews)
+        }
+    }
+
+    const readData = async () => {
+        const q = query(collection(db, "Posts"));
+
+        const querySnapshot = await getDocs(q);
+        let tempPosts = []
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            tempPosts.push({ id: doc.id, data: doc.data() })
+            console.log(doc.id, " => ", doc.data());
+        });
+        console.log(tempPosts)
+        setPosts(tempPosts)
+        setTrending(tempPosts)
+    }
+
+    useEffect(() => {
+        readData()
+    }, [])
+
+
     return (
         <div className='h-screen w-full'>
             <div className='w-full h-full relative'>
@@ -27,22 +97,14 @@ export default function Home() {
             </div>
             <NavBar />
             <div className='w-full py-8 bg-gray-300 flex items-center justify-center space-x-8 relative'>
-                <div>
-                    <select name="Categories" id="Categories" className='px-4 py-2 outline-none border-none w-36 text-center font-Mt font-semibold rounded-md'>
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="opel">Opel</option>
-                        <option value="audi">Audi</option>
-                    </select>
+                <div className={`px-4 py-2 font-Mt rounded-md ${sortBy === "View" ? "bg-green-700 hover:bg-green-900" : "bg-blue-700 hover:bg-blue-900"} cursor-pointer text-white uppercase`} onClick={() => setSortBy("View")}>
+                    <h1>Most Viewed</h1>
                 </div>
-                <div className='px-4 py-2 font-Mt rounded-md bg-green-700 hover:bg-green-900 cursor-pointer text-white uppercase'>
+                <div className={`px-4 py-2 font-Mt rounded-md ${sortBy === "Date" ? "bg-green-700 hover:bg-green-900" : "bg-blue-700 hover:bg-blue-900"} cursor-pointer text-white uppercase`} onClick={() => setSortBy("Date")}>
                     <h1>Most Recent</h1>
                 </div>
-                <div className='px-4 py-2 font-Mt rounded-md bg-blue-700 hover:bg-blue-900 cursor-pointer text-white uppercase'>
+                <div className={`px-4 py-2 font-Mt rounded-md ${sortBy === "Like" ? "bg-green-700 hover:bg-green-900" : "bg-blue-700 hover:bg-blue-900"} cursor-pointer text-white uppercase`} onClick={() => setSortBy("Like")}>
                     <h1>Most Liked</h1>
-                </div>
-                <div className='px-4 py-2 font-Mt rounded-md bg-blue-700 hover:bg-blue-900 cursor-pointer text-white uppercase'>
-                    <h1>Most Viewed</h1>
                 </div>
                 <div className='h-10 w-10 bg-gray-300 rotate-45 absolute -bottom-5'></div>
             </div>
@@ -52,26 +114,38 @@ export default function Home() {
                         <h1 className='font-semibold text-lg'>New To The Community?</h1>
                         <h1 className='text-2xl font-bold text-blue-700 uppercase'>Join The</h1>
                         <h1 className='text-2xl font-bold text-blue-700 uppercase'>Discussion</h1>
-                        <div className='px-4 py-2 bg-blue-700 hover:bg-blue-900 uppercase text-white rounded-md cursor-pointer'>
+                        <div className='px-4 py-2 bg-blue-700 hover:bg-blue-900 uppercase text-white rounded-md cursor-pointer' onClick={() => window.location.href = "/SignUp"}>
                             <h1>Join Now!</h1>
                         </div>
                     </div>
                     <div className='p-4 font-Mt bg-white rounded-md flex flex-col justify-center items-center'>
                         <h1 className='text-2xl font-bold text-blue-700 uppercase tracking-wider'>Trending</h1>
-                        <div className='w-full py-2 space-y-2'>
-                            <PostsSmall userName="Alex Taylor" postTitle="Working With AWS" profileURl="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250" />
-                            <PostsSmall userName="Andrew Matt" postTitle="Azure Fundamentals" profileURl="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200" />
-                            <PostsSmall userName="Kevin Thomas" postTitle="Cypersecuity and Owasp" profileURl="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww&w=1000&q=80" />
-                            <PostsSmall userName="George Brown" postTitle="GCP And Google AI" profileURl="https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80" />
-                            <PostsSmall userName="Samuel Voight" postTitle="Blockchain Technologies Today And Tommorow" profileURl="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/moscot-inline-1658958010.jpg" />
-                        </div>
+                        {Trending && (
+                            <div className='w-full py-2 space-y-2'>
+                                {Trending.sort(sortPostsByViews()).map((doc) => {
+                                    return (
+                                        <PostsSmall userName={doc.data.Username} postTitle={doc.data.Title} profileURl={doc.data.ProfileURL} docId={doc.id} />
+                                    )
+                                })}
+                                {/* <PostsSmall userName="Andrew Matt" postTitle="Azure Fundamentals" profileURl="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200" />
+                                <PostsSmall userName="Kevin Thomas" postTitle="Cypersecuity and Owasp" profileURl="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww&w=1000&q=80" />
+                                <PostsSmall userName="George Brown" postTitle="GCP And Google AI" profileURl="https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80" />
+                                <PostsSmall userName="Samuel Voight" postTitle="Blockchain Technologies Today And Tommorow" profileURl="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/moscot-inline-1658958010.jpg" /> */}
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className='col-span-8'>
                     <div className='bg-white h-full w-full rounded-md p-4 space-y-4'>
-                        <PostsLarge userName="Samuel Voight" postTitle="Blockchain Technologies Today And Tommorow" profileURl="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/moscot-inline-1658958010.jpg" />
-                        <PostsLarge userName="Samuel Voight" postTitle="Blockchain Technologies Today And Tommorow" profileURl="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/moscot-inline-1658958010.jpg" />
-                        <PostsLarge userName="Samuel Voight" postTitle="Blockchain Technologies Today And Tommorow" profileURl="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/moscot-inline-1658958010.jpg" />
+                        {posts && (
+                            <>
+                                {sortPostMain().map((doc) => {
+                                    return (
+                                        <PostsLarge userName={doc.data.Username} postTitle={doc.data.Title} profileURL={doc.data.ProfileURL} postedDate={doc.data.Date} Comments={doc.data.Comments} postBody={doc.data.Body} Views={doc.data.Views} DocID={doc.id} />
+                                    )
+                                })}
+                            </>
+                        )}
                     </div>
                 </div>
                 <div>
