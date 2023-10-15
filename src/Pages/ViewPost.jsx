@@ -97,7 +97,7 @@ export default function ViewPost() {
         const washingtonRef = doc(db, "Posts", PostID);
         // Atomically add a new region to the "regions" array field.
         await updateDoc(washingtonRef, {
-            Likes: arrayUnion(firebaseUser.displayName)
+            Likes: arrayUnion(firebaseUser.uid)
         });
     }
 
@@ -105,7 +105,7 @@ export default function ViewPost() {
         const washingtonRef = doc(db, "Posts", PostID);
         // Atomically add a new region to the "regions" array field.
         await updateDoc(washingtonRef, {
-            Likes: arrayRemove(firebaseUser.displayName)
+            Likes: arrayRemove(firebaseUser.uid)
         });
     }
 
@@ -113,7 +113,7 @@ export default function ViewPost() {
         const washingtonRef = doc(db, "Posts", PostID);
         // Atomically add a new region to the "regions" array field.
         await updateDoc(washingtonRef, {
-            Dislikes: arrayUnion(firebaseUser.displayName)
+            Dislikes: arrayUnion(firebaseUser.uid)
         });
     }
 
@@ -121,7 +121,7 @@ export default function ViewPost() {
         const washingtonRef = doc(db, "Posts", PostID);
         // Atomically add a new region to the "regions" array field.
         await updateDoc(washingtonRef, {
-            Dislikes: arrayRemove(firebaseUser.displayName)
+            Dislikes: arrayRemove(firebaseUser.uid)
         });
     }
 
@@ -129,7 +129,7 @@ export default function ViewPost() {
         const washingtonRef = doc(db, "Posts", PostID);
         // Atomically add a new region to the "regions" array field.
         await updateDoc(washingtonRef, {
-            Views: arrayUnion(firebaseUser.displayName)
+            Views: arrayUnion(firebaseUser.uid)
         });
     }
 
@@ -167,10 +167,10 @@ export default function ViewPost() {
 
     useEffect(() => {
         if (post) {
-            setPostLiked(post.Likes.includes(firebaseUser.displayName))
-            setPostDisLiked(post.Dislikes.includes(firebaseUser.displayName))
+            setPostLiked(post.Likes.includes(firebaseUser.uid))
+            setPostDisLiked(post.Dislikes.includes(firebaseUser.uid))
             setLoading(false)
-            if (post.Views.includes(firebaseUser.displayName) === false) {
+            if (post.Views.includes(firebaseUser.uid) === false) {
                 addView()
             }
         }

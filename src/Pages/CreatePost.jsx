@@ -29,7 +29,7 @@ export default function CreatePost() {
                 Comments: [],
                 Views: [],
                 UserID: firebaseUser.uid,
-                Timestamp : Timestamp
+                Timestamp: Timestamp
             };
             /*   await db.Collection("Posts").AddAsync(docData); */
             // Add a new document with a generated id.
@@ -39,6 +39,7 @@ export default function CreatePost() {
             setPostBody("")
             setPostTitle("")
         } else {
+            setLoading(false)
             setTxtError({ code: 1, message: "Please Make Sure Lenght Of Title Is More Than 5 And Of Body Is More Than 30" })
         }
     }
